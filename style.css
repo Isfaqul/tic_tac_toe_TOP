@@ -1,0 +1,44 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gameboard-container {
+  border: 5px solid rgb(180, 121, 44);
+  padding: 4px;
+  display: grid;
+  width: 400px;
+  max-width: 400px;
+  height: 400px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-gap: 4px;
+}
+
+.cell-item {
+  background-color: rgb(246, 220, 187);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 4rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.cell-item:hover {
+  background-color: rgb(238, 203, 157);
+}
