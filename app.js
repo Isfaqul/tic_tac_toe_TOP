@@ -55,6 +55,11 @@ const gameController = (function (
   // api to get activePlayer
   const getActivePlayer = () => activePlayer;
 
+  // New Round Message
+  const printNewRound = () => {
+    return `It's ${activePlayer.name}'s turn`;
+  };
+
   // method to PlayRound
   const playRound = (index) => {
     if (board[index] === "X" || board[index] === "O") {
@@ -122,8 +127,23 @@ const gameController = (function (
     });
   };
 
-  // get winner name
+  // get winners name
   const getWinner = () => checkWinner();
 
-  return { playRound, activePlayer, getWinner };
+  // declaring winner message
+  const declareWinner = () => {
+    if (getWinner() !== "tie") {
+      return `${getWinner()} wins the game!`;
+    } else if (getWinner() === "tie") {
+      return `The game was a tie`;
+    }
+  };
+
+  // reset the game
+  const resetGame = () => {
+    gameboard.resetBoard();
+    roundCount = 0;
+  };
+
+  return { playRound, activePlayer, declareWinner, printNewRound };
 })();
