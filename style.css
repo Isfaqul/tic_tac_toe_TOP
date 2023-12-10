@@ -14,7 +14,57 @@ body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
+  background-color: rgb(255, 250, 244);
+  /* align-items: center; */
+}
+
+main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+}
+
+h1 {
+  margin-top: 3rem;
+  margin-bottom: 3em;
+  text-align: center;
+  font-size: 3rem;
+  color: rgb(136, 77, 0);
+}
+
+.game-wrapper {
+  display: flex;
+  gap: 1em;
+}
+
+.game-control-container {
+  background-color: rgb(246, 220, 187);
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+}
+
+.player-detail div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.player-detail .player-name,
+.player-detail .player-mark {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.player-detail.player-one {
+  margin-bottom: 1em;
+}
+
+.player-name {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
 }
 
 .gameboard-container {
@@ -27,6 +77,24 @@ body {
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   grid-gap: 4px;
+}
+
+.buttons-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 1em;
+}
+
+.ctrl-btns {
+  width: 100%;
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  padding: 0.5em 1em;
+  /* margin-top: 5em; */
+  align-self: flex-end;
+  cursor: pointer;
 }
 
 .cell-item {
@@ -42,3 +110,93 @@ body {
 .cell-item:hover {
   background-color: rgb(238, 203, 157);
 }
+
+.message-box {
+  background-color: rgb(180, 121, 44);
+  width: 615px;
+  margin-top: 1em;
+}
+
+.game-message {
+  font-size: 1.5rem;
+  width: 100%;
+  padding: 0.6em 1em;
+  color: white;
+  text-align: center;
+}
+
+dialog {
+  width: 50%;
+  height: 60%;
+  border: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(255, 250, 244);
+}
+
+form {
+  padding: 2em;
+}
+
+.form-title {
+  text-align: center;
+  margin-bottom: 2em;
+  text-decoration: underline;
+}
+
+.form-input-container {
+  display: flex;
+  justify-content: center;
+  gap: 2em;
+}
+
+fieldset {
+  padding: 1em 1.6em;
+  border: 1px solid rgb(229, 192, 144);
+}
+
+.form-input-container div {
+  flex: 1;
+}
+
+.input-item input,
+.input-item label {
+  display: block;
+  width: 100%;
+}
+
+.input-item label {
+  margin-bottom: 0.5em;
+  font-size: 1.2rem;
+  color: rgb(159, 100, 24);
+}
+
+.input-item input {
+  margin-bottom: 0.5em;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.5rem;
+  padding: 0.5em;
+  border: none;
+  background-color: rgb(238, 203, 157);
+  color: black;
+  margin-bottom: 0.8em;
+  outline: none;
+}
+
+dialog form button {
+  margin-inline: auto;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.2rem;
+  padding: 0.8em 1.2em;
+  margin-top: 1em;
+  cursor: pointer;
+  background-color: rgb(159, 100, 24);
+  color: white;
+  border: none;
+}
+
+/* .input-item input:focus {
+  border: 1px solid rgb(136, 77, 0);
+} */

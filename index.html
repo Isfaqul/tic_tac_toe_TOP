@@ -9,16 +9,70 @@
   </head>
   <body>
     <main>
-      <div class="gameboard-container">
-        <p class="cell-item"></p>
-        <p class="cell-item"></p>
-        <p class="cell-item"></p>
-        <p class="cell-item"></p>
-        <p class="cell-item"></p>
-        <p class="cell-item"></p>
-        <p class="cell-item"></p>
-        <p class="cell-item"></p>
-        <p class="cell-item"></p>
+      <h1>Tic Tac Toe</h1>
+      <dialog open>
+        <form action="#" method="dialog">
+          <h2 class="form-title">New Game Config</h2>
+          <div class="form-input-container">
+            <div>
+              <fieldset>
+                <div class="input-item">
+                  <label for="p1-name">Player 1 Name</label>
+                  <input type="text" id="p1-name" />
+                </div>
+              </fieldset>
+            </div>
+            <div>
+              <fieldset>
+                <div class="input-item">
+                  <label for="p2-name">Player 2 Name</label>
+                  <input type="text" id="p2-name" />
+                </div>
+              </fieldset>
+            </div>
+          </div>
+          <button class="submit" id="start-game-btn">Start Game</button>
+        </form>
+      </dialog>
+      <section class="game-wrapper">
+        <div class="gameboard-container">
+          <p class="cell-item"></p>
+          <p class="cell-item"></p>
+          <p class="cell-item"></p>
+          <p class="cell-item"></p>
+          <p class="cell-item"></p>
+          <p class="cell-item"></p>
+          <p class="cell-item"></p>
+          <p class="cell-item"></p>
+          <p class="cell-item"></p>
+        </div>
+        <div class="game-control-container">
+          <div class="player-detail player-one">
+            <p>P1 :</p>
+            <div>
+              <p class="player-name" data-p1>Isfaqul</p>
+              <p class="player-mark">X</p>
+            </div>
+          </div>
+          <div class="player-detail player-two">
+            <p>P2 :</p>
+            <div>
+              <p class="player-name" data-p2>Imran</p>
+              <p class="player-mark">O</p>
+            </div>
+          </div>
+          <div class="buttons-container">
+            <button type="button" id="reset-button" class="ctrl-btns">
+              Reset Game
+            </button>
+            <button type="button" id="new-game-button" class="ctrl-btns">
+              New Game
+            </button>
+          </div>
+        </div>
+      </section>
+      <div class="message-box">
+        <p class="game-message"></p>
       </div>
     </main>
   </body>

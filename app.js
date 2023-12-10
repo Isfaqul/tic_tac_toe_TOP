@@ -28,18 +28,33 @@ const gameboard = (function () {
   return { getBoard, addMarker, resetBoard, printBoard };
 })();
 
-const gameController = (function (
-  playerOne = "Player 1",
-  playerTwo = "Player 2"
-) {
+const gameController = (function () {
   // board access through gameboard API
   let board = gameboard.getBoard();
 
   // player list
-  const players = [
-    { name: playerOne, mark: "X" },
-    { name: playerTwo, mark: "O" },
+  let players = [
+    { name: "Player 1", mark: "X" },
+    { name: "Player 2", mark: "O" },
   ];
+
+  const fetchPlayerDetails = () => {
+    let dialogEl = document.querySelector("dialog");
+    let formSubmitBtn = document.querySelector("#start-game-btn");
+    formSubmitBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      players[0].name = document.querySelector("#p1-name").value || "Player 1";
+      players[1].name = document.querySelector("#p2-name").value || "Player 2";
+
+      dialogEl.close();
+      displayController.updateDisplay();
+    });
+  };
+
+  fetchPlayerDetails();
+
+  // method to get acces player names
+  const getPlayerNames = () => [players[0].name, players[1].name];
 
   // setting active player as p1
   let activePlayer = players[0];
@@ -62,17 +77,21 @@ const gameController = (function (
 
   // method to PlayRound
   const playRound = (index) => {
-    if (board[index] === "X" || board[index] === "O") {
+    if (board[index] === players[0].mark || board[index] === players[1].mark) {
       return "Invalid move, cell already filled.";
-    } else if (board[index] !== "X" || board[index] !== "O") {
+    } else if (
+      board[index] !== players[0].mark ||
+      board[index] !== players[1].mark
+    ) {
       gameboard.addMarker(index, activePlayer.mark);
       // Switch player after successful marker addition
-      // gameboard.printBoard();
+      gameboard.printBoard();
       switchPlayer();
       // increment the roundNumber
       roundCount++;
       // Check for winner
       checkWinner();
+      console.log(roundCount);
     }
   };
 
@@ -94,6 +113,7 @@ const gameController = (function (
 
   // method to check winner
   const checkWinner = () => {
+    let winner;
     // Store an array of string of 3 chars
     // Extracted from board using the "winPatterns" indexes
     let currentMarkerStringsFromBoard = [];
@@ -110,28 +130,25 @@ const gameController = (function (
     // to check if we have a winner
     currentMarkerStringsFromBoard.forEach((string) => {
       if (string === player1MarkerString) {
-        console.log(players[0].name);
-        return players[0].name;
+        winner = players[0].name;
       } else if (string === player2MarkerString) {
-        console.log(players[0].name);
-        return players[1].name;
-      } else {
+        winner = players[1].name;
+      } else if (roundCount > 8 && !winner) {
         // If the round number is 9
         // All cells are filled
         // And we can declare the game as a tie
-        if (roundCount === 9) {
-          // console.log("tie");
-          return "tie";
-        }
+        winner = "tie";
       }
     });
+
+    return winner;
   };
 
   // get winners name
   const getWinner = () => checkWinner();
 
   // declaring winner message
-  const declareWinner = () => {
+  const declareResult = () => {
     if (getWinner() !== "tie") {
       return `${getWinner()} wins the game!`;
     } else if (getWinner() === "tie") {
@@ -142,8 +159,73 @@ const gameController = (function (
   // reset the game
   const resetGame = () => {
     gameboard.resetBoard();
+    activePlayer = players[0];
     roundCount = 0;
   };
 
-  return { playRound, activePlayer, declareWinner, printNewRound };
+  return {
+    playRound,
+    activePlayer,
+    getWinner,
+    declareResult,
+    printNewRound,
+    resetGame,
+    getPlayerNames,
+  };
+})();
+
+const displayController = (function () {
+  const gameBoardContainerEl = document.querySelector(".gameboard-container");
+  const cellItems = document.querySelectorAll(".cell-item");
+  const messageEl = document.querySelector(".game-message");
+
+  cellItems.forEach((cell) => {
+    cell.addEventListener("click", () => {
+      let cellIndex = Array.from(gameBoardContainerEl.children).indexOf(cell);
+      gameController.playRound(cellIndex);
+      updateDisplay();
+
+      // Disable clicking if winner is found
+      if (gameController.getWinner()) {
+        disableButtons();
+      }
+    });
+  });
+
+  function updateDisplay() {
+    let board = gameboard.getBoard();
+    cellItems.forEach((cell, index) => (cell.innerText = board[index]));
+
+    // update player names
+    let p1NameEl = document.querySelector("[data-p1]");
+    let p2NameEl = document.querySelector("[data-p2]");
+    p1NameEl.innerText = gameController.getPlayerNames()[0];
+    p2NameEl.innerText = gameController.getPlayerNames()[1];
+
+    // Update message depening on whether there is a winner
+    if (!gameController.getWinner()) {
+      messageEl.innerText = gameController.printNewRound();
+    } else {
+      messageEl.innerText = gameController.declareResult();
+      gameController.resetGame();
+    }
+  }
+
+  updateDisplay();
+
+  // function to disable buttons
+  function disableButtons() {
+    cellItems.forEach((cell) => {
+      cell.style.pointerEvents = "none";
+    });
+  }
+
+  // function to enable buttons
+  function enableButtons() {
+    cellItems.forEach((cell) => {
+      cell.style.pointerEvents = "auto";
+    });
+  }
+
+  return { updateDisplay };
 })();
