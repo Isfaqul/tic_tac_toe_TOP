@@ -220,12 +220,16 @@ const displayController = (function () {
     });
   }
 
-  // function to enable buttons
-  function enableButtons() {
-    cellItems.forEach((cell) => {
-      cell.style.pointerEvents = "auto";
-    });
-  }
+  // // function to enable buttons
+  // function enableButtons() {
+  //   cellItems.forEach((cell) => {
+  //     cell.style.pointerEvents = "auto";
+  //   });
+  // }
+
+  let newGameBtn = document.querySelector("#new-game-button");
+
+  newGameBtn.addEventListener("click", () => location.reload());
 
   return { updateDisplay };
 })();
